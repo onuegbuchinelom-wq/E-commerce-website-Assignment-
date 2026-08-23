@@ -1,0 +1,15 @@
+.footer {
+  background: var(--cream);
+  padding: 28px 5vw;
+  text-align: center;
+  border-top: 1px solid rgba(36, 31, 33, 0.08);
+}
+
+.footer__text {
+  font-family: "Jost", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--pink-dark);
+  margin: 0;
+  opacity: 0.9;
+}

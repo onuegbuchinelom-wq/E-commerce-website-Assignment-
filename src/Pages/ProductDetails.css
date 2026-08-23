@@ -1,0 +1,150 @@
+.product-details {
+  display: flex;
+  gap: 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 32px;
+  font-family: "Jost", sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.product-details__status {
+  text-align: center;
+  padding: 100px 0;
+  font-size: 16px;
+  color: rgba(36, 31, 33, 0.6);
+}
+
+.product-details__status--error {
+  color: var(--pink-dark);
+}
+
+/* ---- Image ---- */
+
+.product-details__image-wrap {
+  flex: 1;
+  border-radius: 20px;
+  overflow: hidden;
+  max-height: 500px;
+}
+
+.product-details__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---- Info ---- */
+
+.product-details__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.product-details__category {
+  display: inline-block;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pink-dark);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.product-details__title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+
+.product-details__price {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 20px;
+}
+
+.product-details__description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(36, 31, 33, 0.7);
+  margin: 0 0 20px;
+}
+
+.product-details__stock {
+  font-size: 14px;
+  color: rgba(36, 31, 33, 0.6);
+  margin: 0 0 28px;
+}
+
+/* ---- Quantity ---- */
+
+.product-details__quantity {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.product-details__quantity button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(36, 31, 33, 0.2);
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.product-details__quantity button:hover {
+  border-color: var(--pink-dark);
+  background: rgba(214, 51, 108, 0.06);
+}
+
+.product-details__quantity span {
+  font-size: 16px;
+  font-weight: 500;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* ---- Add to cart ---- */
+
+.product-details__add-btn {
+  background: var(--pink);
+  color: #fff;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 999px;
+  font-family: "Jost", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  align-self: flex-start;
+}
+
+.product-details__add-btn:hover {
+  background: var(--pink-dark);
+  transform: translateY(-1px);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 800px) {
+  .product-details {
+    flex-direction: column;
+    padding: 50px 6vw;
+  }
+
+  .product-details__image-wrap {
+    max-height: 320px;
+  }
+}

@@ -1,0 +1,92 @@
+.login {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 90px 24px;
+  font-family: "Jost", sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.login__heading {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 36px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0 0 36px;
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login__field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(36, 31, 33, 0.7);
+}
+
+.login__field input {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(36, 31, 33, 0.15);
+  font-family: "Jost", sans-serif;
+  font-size: 15px;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.login__field input:focus {
+  border-color: var(--pink-dark);
+}
+
+.login__error {
+  color: var(--pink-dark);
+  font-size: 13px;
+  margin: 0;
+}
+
+.login__submit-btn {
+  margin-top: 12px;
+  background: var(--pink);
+  color: #fff;
+  border: none;
+  padding: 16px;
+  border-radius: 999px;
+  font-family: "Jost", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.login__submit-btn:hover {
+  background: var(--pink-dark);
+  transform: translateY(-1px);
+}
+
+.login__submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.login__status {
+  text-align: center;
+  padding: 100px 0;
+  font-size: 16px;
+}
+
+.login__status--success {
+  color: var(--pink-dark);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 24px;
+}

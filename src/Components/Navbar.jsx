@@ -2,7 +2,13 @@ import { NavLink } from "react-router-dom";
 import { Search, User, Heart, ShoppingCart } from "lucide-react";
 import "./Navbar.css";
 
-function Navbar({ brandName = "SOLÉNE", cartCount = 0 }) {
+function Navbar({
+  brandName = "SOLÉNE",
+  cartCount = 0,
+  favoritesCount = 0,
+  searchTerm,
+  setSearchTerm
+}) {
   return (
     <header className="navbar">
       <div className="navbar__inner">
@@ -17,28 +23,35 @@ function Navbar({ brandName = "SOLÉNE", cartCount = 0 }) {
           <NavLink to="/shop" className={({ isActive }) => isActive ? "active" : ""}>
             Shop
           </NavLink>
-          <NavLink to="/skincare" className={({ isActive }) => isActive ? "active" : ""}>
-            Skincare
-          </NavLink>
           <NavLink to="/about" className={({ isActive }) => isActive ? "active" : ""}>
             About
           </NavLink>
         </nav>
 
         <div className="navbar__search">
-          <input type="text" placeholder="Search products..." />
-          <button aria-label="Search">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button type="button" aria-label="Search">
             <Search size={16} />
           </button>
         </div>
 
         <div className="navbar__icons">
-          <button className="navbar__icon-btn" aria-label="Account">
+          <NavLink to="/login" className="navbar__icon-btn" aria-label="Account">
             <User size={18} />
-          </button>
-          <button className="navbar__icon-btn" aria-label="Wishlist">
+          </NavLink>
+
+          <NavLink to="/favorites" className="navbar__icon-btn" aria-label="Favorites">
             <Heart size={18} />
-          </button>
+            {favoritesCount > 0 && (
+              <span className="navbar__cart-count">{favoritesCount}</span>
+            )}
+          </NavLink>
+
           <NavLink to="/cart" className="navbar__icon-btn navbar__icon-btn--cart" aria-label="Cart">
             <ShoppingCart size={18} />
             <span className="navbar__cart-count">{cartCount}</span>

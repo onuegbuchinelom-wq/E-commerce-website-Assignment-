@@ -1,29 +1,45 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import heroPortrait from "../Images/bg image.png";
 import ProductCard from "../Components/ProductCard";
 import "./Home.css";
 
+const categories = [
+  { label: "All", value: "all" },
+  { label: "Beauty", value: "beauty" },
+  { label: "Fragrances", value: "fragrances" }
+];
+
 function Home({
-  eyebrow,
-  heading,
-  accentWord,
-  subtext,
-  primaryBtnLabel,
-  badgeLabel,
-  badgeName
+  eyebrow = "Skincare · Makeup · Fragrance",
+  heading = "Everything you need,",
+  accentWord = "one ritual at a time.",
+  subtext = "From skincare to makeup to fragrance — GLOWMART brings together everyday beauty essentials, made simple.",
+  primaryBtnLabel = "Shop the Edit",
+  badgeLabel = "Bestseller",
+  badgeName = "Porcelain Clay Mask",
+  searchTerm,
+  addToCart,
+  toggleFavorite,
+  isFavorite
 }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeCategory, setActiveCategory] = useState("all");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://dummyjson.com/products/category/beauty")
+    fetch("https://dummyjson.com/products")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch products");
         return res.json();
       })
       .then((data) => {
-        setProducts(data.products);
+        const beautyOnly = data.products.filter((product) =>
+          ["beauty", "fragrances"].includes(product.category)
+        );
+        setProducts(beautyOnly);
         setLoading(false);
       })
       .catch((err) => {
@@ -31,6 +47,18 @@ function Home({
         setLoading(false);
       });
   }, []);
+
+  const filteredProducts = products
+    .filter((product) =>
+      activeCategory === "all" ? true : product.category === activeCategory
+    )
+    .filter((product) =>
+      product.title.toLowerCase().includes((searchTerm || "").toLowerCase())
+    );
+
+  const handleSeeMore = () => {
+    navigate("/shop");
+  };
 
   return (
     <div className="home">
@@ -63,17 +91,51 @@ function Home({
       </section>
 
       <section id="collection" className="product-grid">
+        <div className="product-grid__header">
+          <span className="product-grid__eyebrow">Featured Picks</span>
+          <h2 className="product-grid__heading">Our Bestsellers</h2>
+          <p className="product-grid__subtext">
+            A curated edit of GLOWMART favorites — loved for their simplicity and results.
+          </p>
+        </div>
+
+        <div className="product-grid__tabs">
+          {categories.map((cat) => (
+            <button
+              key={cat.value}
+              className={`product-grid__tab ${activeCategory === cat.value ? "active" : ""}`}
+              onClick={() => setActiveCategory(cat.value)}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
         {loading && <p className="product-grid__status">Loading products...</p>}
         {error && <p className="product-grid__status product-grid__status--error">{error}</p>}
-        {!loading && !error && products.length === 0 && (
+        {!loading && !error && filteredProducts.length === 0 && (
           <p className="product-grid__status">No products found.</p>
         )}
-        {!loading && !error && products.length > 0 && (
-          <div className="product-grid__list">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+        {!loading && !error && filteredProducts.length > 0 && (
+          <>
+            <div className="product-grid__list">
+              {filteredProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  addToCart={addToCart}
+                  toggleFavorite={toggleFavorite}
+                  isFavorite={isFavorite}
+                />
+              ))}
+            </div>
+
+            <div className="product-grid__see-more">
+              <button className="product-grid__see-more-btn" onClick={handleSeeMore}>
+                See More →
+              </button>
+            </div>
+          </>
         )}
       </section>
     </div>
