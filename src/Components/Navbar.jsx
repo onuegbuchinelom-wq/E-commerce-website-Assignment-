@@ -3,12 +3,13 @@ import { Search, User, Heart, ShoppingCart } from "lucide-react";
 import "./Navbar.css";
 
 function Navbar({
-  brandName = "SOLÉNE",
+  brandName = "GLOWMART",
   cartCount = 0,
   favoritesCount = 0,
   searchTerm,
   setSearchTerm
-}) {
+}) 
+{
   return (
     <header className="navbar">
       <div className="navbar__inner">
@@ -47,9 +48,8 @@ function Navbar({
 
           <NavLink to="/favorites" className="navbar__icon-btn" aria-label="Favorites">
             <Heart size={18} />
-            {favoritesCount > 0 && (
               <span className="navbar__cart-count">{favoritesCount}</span>
-            )}
+          
           </NavLink>
 
           <NavLink to="/cart" className="navbar__icon-btn navbar__icon-btn--cart" aria-label="Cart">

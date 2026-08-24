@@ -1,75 +1,74 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-function Login({
-  heading = "Login",
-  submitBtnLabel = "Login",
-  submittingBtnLabel = "Logging in..."
-}) {
-  const [formData, setFormData] = useState({ username: "", password: "" });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [user, setUser] = useState(null);
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const DB = {
+    email: "onuegbuchinelo@gmail.com",
+    password: "1234567",
   };
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
 
-    fetch("https://dummyjson.com/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: formData.username,
-        password: formData.password
-      })
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Invalid username or password");
-        return res.json();
-      })
-      .then((data) => {
-        setUser(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  };
+    if (email === "") {
+      alert("Please enter your email");
+      return;
+    }
+    if (password === "") {
+      alert("Please enter your password");
+      return;
+    }
+    if (password.length <= 6) {
+      alert("Password must be greater than 6 characters");
+      return;
+    }
 
-  if (user) {
-    return <p className="login__status login__status--success">Welcome back, {user.firstName}!</p>;
+    if (email === DB.email && password === DB.password) {
+      alert("Login successful!");
+      sessionStorage.setItem("isLoggedIn", "true");
+      navigate("/checkout");
+      return;
+    }
+
+    alert("Incorrect email or password");
   }
 
   return (
     <div className="login">
-      <h1 className="login__heading">{heading}</h1>
+      <h1 className="login__heading">Login</h1>
 
       <form className="login__form" onSubmit={handleSubmit}>
         <div className="login__field">
-          <label htmlFor="username">Username</label>
-          <input id="username" name="username" type="text" value={formData.username} onChange={handleChange} />
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="Enter your email"
+          />
         </div>
 
         <div className="login__field">
           <label htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" value={formData.password} onChange={handleChange} />
+          <input
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Enter your password"
+          />
         </div>
 
-        {error && <p className="login__error">{error}</p>}
-
-        <button type="submit" className="login__submit-btn" disabled={loading}>
-          {loading ? submittingBtnLabel : submitBtnLabel}
+        <button type="submit" className="login__submit-btn">
+          Submit
         </button>
       </form>
     </div>
   );
 }
-
-export default Login;
